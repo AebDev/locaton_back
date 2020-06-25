@@ -16,4 +16,9 @@ class Vehicule extends Model
     {
         return $this->belongsTo(Categorie::class);
     }
+
+    public function locations ()
+    {
+        return $this->hasMany(Location::class);
+    }
 }
