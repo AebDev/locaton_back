@@ -15,7 +15,13 @@ class CategorieController extends Controller
     public function index()
     {
         $categories = Categorie::all();
-        return response()->json(['success' => $categories], 200);
+
+        // $categories = Categorie::with('vehicules')->get();
+        
+        return response()->json([
+            'success' => true, 
+            'data' => $categories
+        ], 200);
     }
 
     /**
@@ -79,7 +85,7 @@ class CategorieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categorie = Categorie::findorfail($id);
+        $categorie = Categorie::find($id);
         $categorie->update([
             'nom_categorie' => $request->nom_categorie,
             'age_min' => $request->age_min,
@@ -100,6 +106,12 @@ class CategorieController extends Controller
     public function destroy($id)
     {
         $categorie = Categorie::find($id);
+        if($categorie === null){
+            return response()->json([
+                'success' => false,
+                'data' => 'item not found'
+            ],'200');
+        }
         $categorie->delete();
         return response()->json([
             'success' => true,

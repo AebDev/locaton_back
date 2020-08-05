@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('cin_passport');
             $table->date('date_naissance');
             $table->string('adresse');
+            $table->string('tel');
             $table->string('ville');
             $table->string('pays');
             $table->string('code_postal');

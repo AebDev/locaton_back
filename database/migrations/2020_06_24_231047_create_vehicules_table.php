@@ -19,7 +19,7 @@ class CreateVehiculesTable extends Migration
             $table->string('marque');
             $table->string('modele');
             $table->string('couleur');
-            $table->string('puissance');
+            $table->string('carburant');
             $table->string('cout_par_jour');
             $table->string('nb_places');
             $table->string('nb_portes');

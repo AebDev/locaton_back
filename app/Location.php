@@ -10,6 +10,7 @@ class Location extends Model
         'montant','etat','num_de_vol','compagnie_aerienne','date_debut',
         'date_debut','date_fin','type_de_protection','option_gps',
         'option_wifi','option_Rehausseur_enfant','option_Rehausseur_bebe',
+        'user_id','vehicule_id'
     ];
 
     public function users()
@@ -19,7 +20,7 @@ class Location extends Model
 
     public function vehicules()
     {
-        return $this->belongsTo(Vehicule::class);
+        return $this->belongsTo('App\Vehicule','vehicule_id','id');
     }
 
     public function penalites()

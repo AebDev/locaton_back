@@ -14,7 +14,8 @@ class PenaliteController extends Controller
      */
     public function index()
     {
-        //
+        $penalite = Penalite::all();
+        return response()->json(['data' => $penalite], 200);
     }
 
     /**
@@ -35,7 +36,12 @@ class PenaliteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $penalite = Penalite::create($request->all());
+
+        return response()->json([
+            'success' => true,
+            'data' => $penalite
+        ], '201');
     }
 
     /**
@@ -44,9 +50,22 @@ class PenaliteController extends Controller
      * @param  \App\Penalite  $penalite
      * @return \Illuminate\Http\Response
      */
-    public function show(Penalite $penalite)
+    public function show($id)
     {
-        //
+        $penalite = Penalite::find($id);
+
+        if ($penalite === null) {
+
+            return response()->json([
+                'success' => false,
+                'data' => 'item not found'
+            ], '404');
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $penalite
+        ], '200');
     }
 
     /**
@@ -67,9 +86,24 @@ class PenaliteController extends Controller
      * @param  \App\Penalite  $penalite
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Penalite $penalite)
+    public function update(Request $request, $id)
     {
-        //
+        $penalite = Penalite::find($id);
+
+        if ($penalite === null) {
+
+            return response()->json([
+                'success' => false,
+                'data' => 'item not found'
+            ], '404');
+        }
+
+        $penalite->update($request->all());
+
+        return response()->json([
+            'success' => true,
+            'data' => $penalite
+        ], '202');
     }
 
     /**
@@ -78,8 +112,23 @@ class PenaliteController extends Controller
      * @param  \App\Penalite  $penalite
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Penalite $penalite)
+    public function destroy($id)
     {
-        //
+        $penalite = Penalite::find($id);
+
+        if ($penalite === null) {
+
+            return response()->json([
+                'success' => false,
+                'data' => 'item not found'
+            ], '404');
+        }
+
+        $penalite->delete();
+
+        return response()->json([
+            'success' => true,
+            'data' => null
+        ], '200');
     }
 }

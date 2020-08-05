@@ -13,6 +13,6 @@ class Categorie extends Model
 
     public function vehicules()
     {
-        return $this->hasMany(Vehicule::class);
+        return $this->hasMany('App\Vehicule','categorie_id','id');
     }
 }

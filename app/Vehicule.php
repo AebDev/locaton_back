@@ -9,16 +9,16 @@ class Vehicule extends Model
     protected $fillable = [
         'matricule','marque','modele','couleur','puissance',
         'cout_par_jour','nb_places','nb_portes','climatisation',
-        'boite_vitesse','franchise','category_id'
+        'boite_vitesse','franchise','categorie_id'
     ];
 
     public function categories()
     {
-        return $this->belongsTo(Categorie::class);
+        return $this->belongsTo('App\Categorie','categorie_id');
     }
 
-    public function locations ()
+    public function locations()
     {
-        return $this->hasMany(Location::class);
+        return $this->hasMany('App\Location','vehicule_id');
     }
 }

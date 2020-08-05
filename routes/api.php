@@ -15,10 +15,18 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
+Route::resource('vehicule','VehiculeController');
+Route::get('categorie','CategorieController@index');
+
 
 Route::group(['middleware' =>['jwt.verify']], function () {
     Route::get('logout', 'ApiController@logout');
     Route::get('user', 'ApiController@getAuthUser');
-    Route::resource('categorie','CategorieController');
+    Route::put('user', 'ApiController@updateAuthUser');
+    // Route::resource('categorie','CategorieController');
+
+    Route::resource('location','LocationController');
+    Route::resource('Penalite','PenaliteController');
+    
 });
 

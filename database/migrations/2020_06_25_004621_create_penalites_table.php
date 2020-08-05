@@ -17,7 +17,7 @@ class CreatePenalitesTable extends Migration
             $table->bigIncrements('id');
             $table->string('date_retour');
             $table->double('cout');
-            $table->string('Raison');
+            $table->string('raison');
             $table->unsignedBigInteger('location_id');
             $table->foreign('location_id')->references('id')->on('locations')->delete('cascade');
             $table->timestamps();

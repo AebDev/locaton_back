@@ -17,8 +17,8 @@ class CreateLocationsTable extends Migration
             $table->bigIncrements('id');
             $table->string('montant');
             $table->string('etat');
-            $table->string('num_de_vol');
-            $table->string('compagnie_aerienne');
+            $table->string('num_de_vol')->nullable();
+            $table->string('compagnie_aerienne')->nullable();
             $table->string('date_debut');
             $table->string('date_fin');
             $table->string('type_de_protection');
