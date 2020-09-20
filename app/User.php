@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'genre','nom','prenom','cin_passport','date_naissance','adresse',
+        'nom','prenom','cin_passport','date_naissance','adresse','telephone',
         'ville','pays','code_postal','email', 'password','role',
     ];
 
@@ -63,7 +63,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function locations ()
     {
-        return $this->hasMany(Location::class);
+        return $this->hasMany('App\Location','user_id');
     }
 
     public function tickets ()

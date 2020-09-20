@@ -118,4 +118,23 @@ class CategorieController extends Controller
             'data' => null
         ],'200');
     }
+
+    public function deleteCategories(Request $request)
+    {
+        foreach ($request->deleteList as $id) {
+
+            $user = Categorie::find($id);
+
+            if($user !== null){
+                $user->delete();
+            } 
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => null
+        ],'200');
+    }
+
+    
 }

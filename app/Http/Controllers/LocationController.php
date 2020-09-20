@@ -161,4 +161,31 @@ class LocationController extends Controller
             'data' => null
         ], '200');
     }
+
+    public function reservations()
+    {
+        // if (JWTAuth::parseToken()->authenticate()->role !== 'admin') {
+        //     return response()->json(['you should be admin'], 400);
+        // }
+
+        $locations = Location::with('users')->with('vehicules')->get();
+        return response()->json(['data' => $locations], 200);
+    }
+
+    public function deleteLocations(Request $request)
+    {
+        foreach ($request->deleteList as $id) {
+
+            $user = Location::find($id);
+
+            if($user !== null){
+                $user->delete();
+            } 
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => null
+        ],'200');
+    }
 }

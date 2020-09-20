@@ -15,7 +15,7 @@ class Location extends Model
 
     public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\User','user_id','id');
     }
 
     public function vehicules()

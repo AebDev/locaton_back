@@ -18,6 +18,7 @@ class CreateVehiculesTable extends Migration
             $table->string('matricule');
             $table->string('marque');
             $table->string('modele');
+            $table->text('image')->default('/img/vehicule/vehicule.png');
             $table->string('couleur');
             $table->string('carburant');
             $table->string('cout_par_jour');

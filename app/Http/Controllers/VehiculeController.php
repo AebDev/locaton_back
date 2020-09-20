@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Location;
 use App\Vehicule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class VehiculeController extends Controller
 {
@@ -105,12 +107,23 @@ class VehiculeController extends Controller
      */
     public function store(Request $request)
     {
+       
+        $file = $request->file('image'); 
+         
+         $ext = $file->extension();
+         
+         $fileName = Carbon::now()->format('d-m-Y') . '-' . Str::random(10) . '.' . $ext;
+         
+         $request->file('image')->move(public_path("img/vehicule"), $fileName); 
+
+
         $vehicule = new Vehicule();
         $vehicule->matricule = $request->matricule;
         $vehicule->marque = $request->marque;
         $vehicule->modele = $request->modele;
+        $vehicule->image = '/img/vehicule/' . $fileName;
         $vehicule->couleur = $request->couleur;
-        $vehicule->puissance = $request->puissance;
+        $vehicule->carburant = $request->carburant;
         $vehicule->cout_par_jour = $request->cout_par_jour;
         $vehicule->nb_places = $request->nb_places;
         $vehicule->nb_portes = $request->nb_portes;
@@ -160,11 +173,50 @@ class VehiculeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $file = $request->file('image'); 
+        
+         $ext = $file->extension();
+         $fileName = Carbon::now()->format('d-m-Y') . '-' . Str::random(10) . '.' . $ext;
+         $request->file('image')->move(public_path("img/vehicule"), $fileName);
+
+
         $vehicule = Vehicule::find($id);
         $vehicule->update([
             'matricule' => $request->matricule,
             '$vehicule->marque' => $request->marque,
             'modele' => $request->modele,
+            'image' => '/img/vehicule/' . $fileName,
+            'couleur' => $request->couleur,
+            'puissance' => $request->puissance,
+            'cout_par_jour' => $request->cout_par_jour,
+            'nb_places' => $request->nb_places,
+            'nb_portes' => $request->nb_portes,
+            'climatisation' => $request->climatisation,
+            'boite_vitesse' => $request->boite_vitesse,
+            'franchise' => $request->franchise,
+            'categorie_id' => $request->categorie_id,
+        ]);
+        return response()->json([
+            'success' => true,
+            'data' => $vehicule
+        ], '200');
+    }
+
+    public function updateVehicule(Request $request, $id)
+    {
+        $file = $request->file('image'); 
+        
+         $ext = $file->extension();
+         $fileName = Carbon::now()->format('d-m-Y') . '-' . Str::random(10) . '.' . $ext;
+         $request->file('image')->move(public_path("img/vehicule"), $fileName);
+
+
+        $vehicule = Vehicule::find($id);
+        $vehicule->update([
+            'matricule' => $request->matricule,
+            '$vehicule->marque' => $request->marque,
+            'modele' => $request->modele,
+            'image' => '/img/vehicule/' . $fileName,
             'couleur' => $request->couleur,
             'puissance' => $request->puissance,
             'cout_par_jour' => $request->cout_par_jour,
@@ -202,5 +254,32 @@ class VehiculeController extends Controller
             'success' => true,
             'data' => null
         ], '200');
+    }
+
+    public function vehicules()
+    {
+        // if (JWTAuth::parseToken()->authenticate()->role !== 'admin') {
+        //     return response()->json(['you should be admin'], 400);
+        // }
+
+        $vehicules = Vehicule::with('categories')->get();
+        return response()->json(['data' => $vehicules], 200);
+    }
+
+    public function deleteVehicules(Request $request)
+    {
+        foreach ($request->deleteList as $id) {
+
+            $user = Vehicule::find($id);
+
+            if($user !== null){
+                $user->delete();
+            } 
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => null
+        ],'200');
     }
 }
